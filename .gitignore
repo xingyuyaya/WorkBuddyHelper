@@ -9,6 +9,7 @@ __pycache__/
 
 docs/.vitepress/cache/
 docs/.vitepress/dist/
+docs/.vitepress/config.mts.timestamp-*.mjs
 
 # Keep implementation plans local; publish only product code and content.
 docs/plans/

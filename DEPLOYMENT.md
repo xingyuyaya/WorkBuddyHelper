@@ -1,88 +1,53 @@
 # Cloudflare Pages 部署
 
-本站采用 VitePress 静态构建，并通过 Cloudflare Pages 的 GitHub 集成持续部署。
+本站是纯静态 VitePress 站点，通过 Cloudflare Pages 的 GitHub 集成持续部署。
+推送到 `main` 分支即自动构建并发布，无需服务器。
 
-## Cloudflare Pages 设置
+## 一、Cloudflare Pages 设置（首次部署）
 
-在 Cloudflare 控制台选择 **Workers & Pages → Create application → Pages → Import an existing Git repository**，授权并选择 `xingyuyaya/WorkBuddyHelper`。
-
-使用以下配置：
+1. 登录 [Cloudflare 控制台](https://dash.cloudflare.com/)，进入 **Workers & Pages**。
+2. 点击 **Create application → Pages → Import an existing Git repository**。
+3. 授权 GitHub 账号，选择仓库 `xingyuyaya/WorkBuddyHelper`。
+4. 按下面的表格填写构建配置：
 
 | 配置项 | 值 |
 | --- | --- |
 | Project name | `workbuddyhelper` |
 | Production branch | `main` |
-| Framework preset | `VitePress`（也可选择 None） |
+| Framework preset | `VitePress`（选不到就选 None） |
 | Build command | `npm run docs:build` |
 | Build output directory | `docs/.vitepress/dist` |
 | Root directory | `/` |
-| Node.js version | `22` |
 
-在 Cloudflare Pages 的生产环境变量中设置：
+5. 点击 **Save and Deploy**，等待首次构建完成。
 
-```text
-VITEPRESS_SITE_URL=https://workbuddy.homes
-```
+Cloudflare 会自动读取仓库根目录的 `.nvmrc`（Node 22），并用 `package-lock.json`
+固定依赖。**无需手动设置任何环境变量**——本站是纯静态站点，不依赖服务端。
 
-访问量接口还需要以下服务端变量或 Secret。它们只存在于 Cloudflare，不能使用
-`VITE_` 前缀，也不能提交到 GitHub：
+## 二、部署完成后
 
-```text
-CF_ANALYTICS_TOKEN
-CF_ACCOUNT_ID
-CF_WEB_ANALYTICS_SITE_TAG
-```
+- 首次构建完成后会得到一个默认域名：`https://workbuddyhelper.pages.dev`。
+- 后续只要 `git push` 到 `main`，Cloudflare Pages 会自动重新构建并发布。
+- 创建 Pull Request 时，Pages 会自动生成预览部署链接，方便审核。
 
-仓库默认值同样使用正式域名，避免缺少环境变量时 canonical、Open Graph
-和 sitemap 回退到 `pages.dev` 域名。
+## 三、自定义域名（可选）
 
-仓库中的 `.nvmrc` 会声明 Node.js 22。依赖通过 `package-lock.json` 固定，Cloudflare 构建时应使用 `npm ci` 安装。
+如果你有域名（例如 `workbuddy.homes`），在 Pages 项目的
+**Custom domains** 里添加即可，Cloudflare 会自动配置 DNS 与 HTTPS 证书。
 
-## 访问量历史数据库
+绑定域名后，建议同步更新：
 
-Cloudflare Web Analytics 只作为实时数据源。完整日数据由定时 Worker 写入 D1，
-Pages Function `/api/traffic` 返回“D1 历史累计 + 今日实时数据”。
+- `docs/.vitepress/config.mts` 中的 `site` 相关 URL
+- `docs/public/robots.txt` 里的 sitemap 地址
+- `docs/public/sitemap.xml` 里的站点地址
 
-首次配置远程环境时：
-
-1. 创建名为 `workbuddy-traffic` 的 D1 数据库。
-2. 将 Cloudflare 返回的数据库 ID 替换到 `wrangler.jsonc` 和
-   `wrangler.collector.jsonc`，不要继续使用本地占位 ID。
-3. 执行 `wrangler d1 migrations apply TRAFFIC_DB --remote`。
-4. 为 Pages 配置上面的三个 Cloudflare Analytics Secret。
-5. 为 Pages 和 `workbuddy-traffic-collector` Worker 配置相同的
-   `TRAFFIC_SYNC_TOKEN` Secret；定时 Worker 只通过带鉴权的内部接口触发 Pages
-   归档，不持有 Analytics Token。
-6. 部署定时 Worker。其 Cron 为 `15 18 * * *`，即北京时间每日 02:15。
-
-`TRAFFIC_HISTORY_START=2026-07-10` 是公开的数据起始日期，不是 Secret。
-`TRAFFIC_SYNC_TOKEN` 用于保护 Pages 内部同步接口和收集器的手动 `/sync`
-接口，应分别使用 Pages Secret 与 Worker Secret 保存。
-
-## 本地使用同一套构建与 D1
+## 四、本地验证
 
 ```bash
 npm ci
-npm run docs:build
-npm run traffic:setup:local
-npm run pages:dev
+npm run docs:build     # 构建产物输出到 docs/.vitepress/dist
+npm run preview        # 本地预览构建结果
 ```
 
-打开 `http://127.0.0.1:8788/`。本地使用被 Git 忽略的 `.dev.vars` 模拟今日实时
-数据，并使用 `scripts/local-traffic-seed.sql` 初始化本地 D1；其中不包含任何
-Cloudflare Token。
-
-## 自动部署行为
-
-- 推送到 `main`：发布生产版本。
-- Pull Request 或其他分支：由 Cloudflare Pages 生成预览部署。
-- 静态页面由 Pages 提供，`/api/traffic` 由 Pages Function 提供，并绑定 D1。
-- 定时归档由独立 Worker 执行，页面浏览器不会接触 Cloudflare Secret。
-
-## 自定义域名
-
-正式自定义域名为 `https://workbuddy.homes`。如未来更换域名，需要同步更新
-`VITEPRESS_SITE_URL`、`docs/public/robots.txt`、README 在线阅读链接和各搜索引擎站点属性。
-
-`docs/public/_headers` 会为带内容指纹的 `/assets/*` 设置一年不可变缓存，
-并为社区图片、分享图和 favicon 设置一个月浏览器缓存。
+构建成功的标志：`docs/.vitepress/dist/index.html` 存在，且包含 `assets`、
+`bluebook`、`cases`、`community`、`help` 等目录。
