@@ -43,7 +43,18 @@ const bluebookSidebar: DefaultTheme.Sidebar = {
 
       const children = readdirSync(partDir, { withFileTypes: true })
         .filter((entry) => entry.isDirectory())
-        .sort((left, right) => left.name.localeCompare(right.name, "zh-CN"))
+        .sort((left, right) => {
+          // 章号前缀（如「第 1 章」「第 10 章」）按数字排序，避免字符串排序
+          // 把「第 10 章」排在「第 2 章」前面。
+          const leftNum = Number(left.name.match(/^第\s*(\d+)\s*章/)?.[1] ?? NaN);
+          const rightNum = Number(right.name.match(/^第\s*(\d+)\s*章/)?.[1] ?? NaN);
+          if (!Number.isNaN(leftNum) && !Number.isNaN(rightNum)) {
+            return leftNum - rightNum;
+          }
+          if (!Number.isNaN(leftNum)) return -1;
+          if (!Number.isNaN(rightNum)) return 1;
+          return left.name.localeCompare(right.name, "zh-CN");
+        })
         .map((chapter) => ({
           text: extractTitle(
             `${partDir}/${chapter.name}/index.md`,
