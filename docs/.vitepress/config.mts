@@ -58,6 +58,7 @@ export default defineConfig({
         { text: "蓝皮书", link: "/bluebook/" },
         { text: "案例", link: firstCaseLink },
         { text: "帮你解决", link: "/help/" },
+        { text: "联系我们", link: "/contact/" },
       ],
       sidebar: siteSidebar,
       socialLinks: [

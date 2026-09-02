@@ -14,15 +14,15 @@ pageClass: help-you-page
     <h1>有工作场景，不知道怎么用 WorkBuddy 解决？</h1>
     <p class="help-hero__lead">把你的真实问题告诉我们。我们会阅读每一份场景问卷，评估 WorkBuddy 是否能够解决；如果需要补充信息，我们会联系你进一步沟通。</p>
     <p>具有代表性和复用价值的问题，我们会尝试做成完整 Case，写清使用的 Skill、操作过程、任务描述和最终效果，并开源到社区案例集，帮助更多遇到同类问题的人。</p>
-    <div class="help-hero__actions">
+    <!--<div class="help-hero__actions">
       <a class="help-button help-button--primary" href="#scenario-survey">扫码填写问卷</a>
-      <a class="help-button" href="/cases/">查看经典案例</a>
-    </div>
+      <a class="help-button" href="/contact/">联系我们</a>
+    </div>-->
   </div>
 
   <div id="scenario-survey" class="help-survey-card">
     <div class="help-survey-card__heading">
-      <span>01</span>
+      <!--<span>01</span>-->
       <div>
         <strong>WorkBuddy 场景收集调查问卷</strong>
         <small>扫码后填写你的真实需求</small>

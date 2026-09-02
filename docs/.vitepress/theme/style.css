@@ -14,6 +14,8 @@
   --vp-font-family-base: var(--wb-body);
   --vp-font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
+  --vp-layout-max-width: 1480px;
+
   --vp-c-brand-1: #0f766e;
   --vp-c-brand-2: #0d9488;
   --vp-c-brand-3: #b1f9f9;
@@ -108,7 +110,7 @@ button {
 }
 
 .VPNavBar .container {
-  max-width: 1480px;
+  max-width: var(--vp-layout-max-width);
 }
 
 .VPNavBarTitle .title {
@@ -133,6 +135,31 @@ button {
 .VPNavBarMenuGroup .text {
   font-size: 15px;
   font-weight: 650;
+}
+
+/* ────────────────────────────────────────────────────────────
+   顶部导航栏统一布局：logo(最左) ｜ 搜索框 ｜ 菜单+主题+社交(整体最右)
+   - VitePress 1.6.x 的 .content-body 默认就是 flex + justify-content: flex-end
+     （菜单+主题+社交作为一组靠右），所以只需要把搜索框单独移到最左
+   - 用 order:-1 + margin-right:auto 把搜索框从"靠右组"里拆出来
+   ──────────────────────────────────────────────────────────── */
+/* 搜索框/菜单统一布局（所有页面通用，不依赖 has-sidebar）
+   - VitePress 1.6.x 把 has-sidebar 加在 .VPNavBarTitle 而非 .VPNavBar 上，
+     所以这里用 .VPNavBar 通用选择器即可覆盖全部页面
+   - .content-body 默认 flex + justify-content:flex-end（菜单+主题+社交靠右），
+     把搜索框用 order:-1 + margin-right:auto 拆出来推到最左、挨着 logo */
+.VPNavBar .content-body {
+  gap: 16px;
+}
+
+.VPNavBar .content-body .VPNavBarSearch {
+  order: -1;
+  margin-right: auto;
+}
+
+/* 带 sidebar 页面顶部那条竖线在统一布局下多余，隐藏 */
+.VPNavBar .divider {
+  display: none !important;
 }
 
 .VPNavBarMenuLink.active {
