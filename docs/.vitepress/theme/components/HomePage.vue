@@ -24,7 +24,7 @@ import PixelIconSprite from "./PixelIconSprite.vue";
         </div>
 
         <div class="wb-hero__art" aria-label="WorkBuddy 像素图标组合">
-          <span class="wb-hero__monogram">WB_Helper</span>
+          <span class="wb-hero__monogram">WB_H</span>
           <span class="wb-icon-card wb-icon-card--buddy">
             <PixelIcon name="face-grin" />
           </span>
