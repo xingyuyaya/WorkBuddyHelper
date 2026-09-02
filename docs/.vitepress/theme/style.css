@@ -229,9 +229,9 @@ button {
 }
 
 .wb-hero__copy .wb-hero__title--bluebook {
-  font-size: clamp(52px, 4.7vw, 70px);
+  font-size: clamp(40px, 4.7vw, 70px);
   letter-spacing: -0.06em;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .wb-hero__summary {
@@ -1157,7 +1157,8 @@ body.wb-lightbox-open {
   }
 
   .wb-hero__copy .wb-hero__title--bluebook {
-    font-size: clamp(31px, 8.5vw, 36px);
+    font-size: clamp(28px, 8vw, 36px);
+    line-height: 1.18;
   }
 
   .wb-hero__summary {
