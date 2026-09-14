@@ -1,0 +1,7 @@
+﻿fix(seo): 修复 P0 — canonical/OG 指向真实域名并解除 pages.dev 收录限制
+
+- config.mts: 站点默认域名 example.com → https://workbuddyhelper.pages.dev
+- robots.txt: Sitemap 域名同步更新为真实域名
+- _headers: 移除 pages.dev 的 X-Robots-Tag noindex 规则
+
+此前搜索引擎规范页与社交分享图均指向占位域名 example.com，且 pages.dev 被 noindex 导致无法收录。
