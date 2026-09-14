@@ -4,7 +4,7 @@ import { siteSidebar, firstCaseLink } from "./sidebar";
 import { configureMermaidMarkdown } from "./mermaid-markdown";
 import { createPageDescription, createSeoHead } from "./seo";
 
-const siteUrl = process.env.VITEPRESS_SITE_URL || "https://workbuddyhelper.example.com";
+const siteUrl = process.env.VITEPRESS_SITE_URL || "https://workbuddyhelper.pages.dev";
 
 export default defineConfig({
     lang: "zh-CN",

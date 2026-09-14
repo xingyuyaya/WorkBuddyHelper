@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://workbuddyhelper.example.com/sitemap.xml
+Sitemap: https://workbuddyhelper.pages.dev/sitemap.xml
