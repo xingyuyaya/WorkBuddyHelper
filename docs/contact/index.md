@@ -13,7 +13,7 @@ pageClass: community-cases-page
     <p class="help-pixel-label">SCENARIO SUPPORT · CONTRACT US</p>
     <h1>联系我们</h1>
     <p class="help-hero__lead">如果您有迫切的问题，或您已经提交问卷需要我们尽快提供帮助</p>
-    <p>辅助性文案描述。。。。。。</p>
+    <!--<p>辅助性文案描述。。。。。。</p>-->
   </div>
 </div>
 
@@ -24,10 +24,10 @@ pageClass: community-cases-page
     <!--<h2 id="case-co-create-title">提交 PR 后，加入 WorkBuddy 共创群</h2>-->
     <!--<p>如果你正在准备或已经提交 Case PR，欢迎添加微信。我们会邀请你进入 WorkBuddy 共创群，一起讨论案例结构、复现过程、审核建议和蓝皮书后续选题。</p>-->
     <strong>欢迎添加微信，请备注：WorkBuddyHelper</strong>
-    <ul>
+    <!--<ul>
       <li>其他联系方式一</li>
       <li>其他联系方式二</li>
-    </ul>
+    </ul>-->
   </div>
 
   <a class="case-co-create__qr" href="/cases/workbuddy-co-create-wechat.png" target="_blank" rel="noreferrer" aria-label="查看 WorkBuddyHelper 联系人微信二维码大图">
