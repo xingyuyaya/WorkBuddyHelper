@@ -12,6 +12,12 @@ export default defineConfig({
     titleTemplate: ":title · WorkBuddyHelper",
     description: "WorkBuddyHelper：WorkBuddy 实战蓝皮书，从使用手册、实战案例、进阶系统到岗位与行业落地。",
     cleanUrls: true,
+    appearance: "light",
+    vite: {
+      resolve: {
+        preserveSymlinks: true,
+      },
+    },
     lastUpdated: true,
     srcExclude: ["**/source.md", "plans/**"],
     sitemap: {
@@ -30,7 +36,7 @@ export default defineConfig({
     transformHead: (context) => createSeoHead(siteUrl, context),
     head: [
       ["link", { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
-      ["meta", { name: "theme-color", content: "#b1f9f9" }],
+      ["meta", { name: "theme-color", content: "#070b16" }],
       ["meta", { name: "author", content: "WorkBuddyHelper" }],
       [
         "meta",
@@ -61,9 +67,9 @@ export default defineConfig({
         { text: "联系我们", link: "/contact/" },
       ],
       sidebar: siteSidebar,
-      socialLinks: [
+      /*socialLinks: [
         { icon: "github", link: "https://github.com/" },
-      ],
+      ],*/
       search: {
         provider: "local",
       },
