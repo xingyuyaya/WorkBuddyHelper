@@ -1224,7 +1224,7 @@ button {
 
 .vp-doc th {
   border-color: var(--wb-line-strong);
-  color: #fff;
+  color: var(--wb-text);
   background: var(--wb-surface-2);
 }
 

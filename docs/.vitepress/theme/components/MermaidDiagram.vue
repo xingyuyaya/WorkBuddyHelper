@@ -111,7 +111,8 @@ onUnmounted(() => {
   display: block;
   width: 100%;
   height: auto;
-  min-width: 560px;
+  min-width: 1100px;
+  min-height: 260px;
   margin: 0 auto;
 }
 
@@ -129,7 +130,8 @@ onUnmounted(() => {
 
 @media (max-width: 760px) {
   .wb-mermaid__svg :deep(svg) {
-    min-width: 480px;
+    min-width: 900px;
+    min-height: 220px;
   }
 }
 </style>
